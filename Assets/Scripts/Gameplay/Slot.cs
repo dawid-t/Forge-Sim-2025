@@ -5,14 +5,9 @@ namespace Critsoft.ForgeSim2025.Gameplay
 {
     public class Slot : MonoBehaviour, IDropHandler
     {
-        #region Serialized Fields
-
-        [SerializeField] private bool _isEmpty = true;
-
-        #endregion
-
         #region Fields
 
+        private bool _isEmpty = true;
         private Item _item;
 
         #endregion
