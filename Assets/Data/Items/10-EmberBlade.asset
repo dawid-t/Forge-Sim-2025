@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6eb19804166a1294995ac9916b3605e8, type: 3}
+  m_Name: 10-EmberBlade
+  m_EditorClassIdentifier: 
+  Type: 9
+  IsCrafted: 1
+  Name: Ember Blade
+  Description: Blazing sword created by fusing steel with Ember Dust.
+  Sprite: {fileID: 21300000, guid: 1349559fc30af9c48b5aa9f8bf52febd, type: 3}
