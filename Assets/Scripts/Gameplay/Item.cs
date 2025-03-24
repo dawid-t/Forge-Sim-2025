@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Linq;
 using TMPro;
 using UnityEngine;
@@ -68,6 +69,7 @@ namespace Critsoft.ForgeSim2025.Gameplay
             
             _currentSlot = currentSlot;
             UpdateQuantityText();
+            PlayPunchScaleAnimation();
 
             _draggableItem = GetComponent<DraggableItem>();
             if (_draggableItem != null)
@@ -80,6 +82,7 @@ namespace Critsoft.ForgeSim2025.Gameplay
         {
             _quantity += quantity;
             UpdateQuantityText();
+            PlayPunchScaleAnimation();
         }
 
         public void RemoveQuantity(int quantity)
@@ -94,6 +97,7 @@ namespace Critsoft.ForgeSim2025.Gameplay
             else
             {
                 UpdateQuantityText();
+                PlayPunchScaleAnimation();
             }
         }
 
@@ -107,12 +111,19 @@ namespace Critsoft.ForgeSim2025.Gameplay
             {
                 _draggableItem.SlotChanged -= OnSlotChanged;
             }
+            DOTween.Kill(transform);
         }
 
         private void UpdateQuantityText()
         {
             _quantityText.text = _quantity.ToString();
             _quantityText.gameObject.SetActive(_quantity >= MinValueToShowQuantity);
+        }
+
+        private void PlayPunchScaleAnimation(float punchScale = 0.2f, float duration = 0.3f)
+        {
+            DOTween.Kill(transform);
+            transform.DOPunchScale(Vector3.one * punchScale, duration);
         }
 
         private void OnSlotChanged(Slot slot)
