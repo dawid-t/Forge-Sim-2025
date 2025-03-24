@@ -9,6 +9,7 @@ namespace Critsoft.ForgeSim2025.Gameplay.Installers
 {
     public class GameplayInstaller : MonoInstaller
     {
+        [SerializeField] private GameObject _fallingResourcePrefab;
         [SerializeField] private Quest _questPrefab;
         [SerializeField] private Transform _questGrid;
 
@@ -21,10 +22,16 @@ namespace Critsoft.ForgeSim2025.Gameplay.Installers
 
             // Factories / Prefabs
             Container.BindFactory<Quest, Quest.Factory>()
-            .FromComponentInNewPrefab(_questPrefab)
-            .UnderTransform(_questGrid);
+                .FromComponentInNewPrefab(_questPrefab)
+                .UnderTransform(_questGrid);
+
+            Container.BindMemoryPool<FallingResource, FallingResource.Pool>()
+                .WithInitialSize(GameConfig.FallingResourcesMemoryPoolSize)
+                .FromComponentInNewPrefab(_fallingResourcePrefab)
+                .UnderTransformGroup(GameConfig.FallingResourcesMemoryPoolId);
 
             // Other
+            Container.Bind<ResourceSpawner>().FromComponentInHierarchy().AsSingle();
             Container.Bind<QuestManager>().FromComponentInHierarchy().AsSingle();
         }
     }
