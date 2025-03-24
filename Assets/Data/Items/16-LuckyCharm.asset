@@ -15,7 +15,7 @@ MonoBehaviour:
   Type: 15
   IsCrafted: 0
   Name: Lucky Charm
-  Description: Increases success rate by 10 percentage points.
+  Description: Increases success rate by 10%.
   Sprite: {fileID: 21300000, guid: 8db4ade4cb89ef245a5b8809273c9505, type: 3}
   HasBonusEffect: 1
   BonusEffect: 1
