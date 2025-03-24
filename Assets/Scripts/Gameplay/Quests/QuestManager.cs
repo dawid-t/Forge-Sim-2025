@@ -9,6 +9,7 @@ namespace Critsoft.ForgeSim2025.Gameplay.Quests
     {
         #region Events
 
+        public event Action AllQuestsFinished;
         public event Action<int, MachineType> QuestFinished;
 
         #endregion
@@ -70,6 +71,12 @@ namespace Critsoft.ForgeSim2025.Gameplay.Quests
         private void OnQuestFinished(int questId, MachineType machineType)
         {
             QuestFinished?.Invoke(questId, machineType);
+
+            int lastQuestId = _quests[_quests.Count - 1].Id;
+            if (lastQuestId == questId)
+            {
+                AllQuestsFinished?.Invoke();
+            }
         }
 
         #endregion

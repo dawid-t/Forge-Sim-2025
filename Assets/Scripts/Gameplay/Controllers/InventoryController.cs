@@ -1,4 +1,5 @@
 using Critsoft.ForgeSim2025.Gameplay.Models;
+using Critsoft.ForgeSim2025.Gameplay.Quests;
 using Critsoft.ForgeSim2025.Gameplay.Views;
 using System;
 using UnityEngine;
@@ -20,20 +21,24 @@ namespace Critsoft.ForgeSim2025.Gameplay.Controllers
 
         private InventoryModel _model;
         private InventoryView _view;
+        private QuestManager _questManager;
 
         #endregion
 
         #region Public Methods
 
         [Inject]
-        public void Construct(InventoryModel model, InventoryView view)
+        public void Construct(InventoryModel model, InventoryView view, QuestManager questManager)
         {
             _model = model;
             _view = view;
+            _questManager = questManager;
 
             _model.InventoryUpdated += OnInventoryUpdated;
             _model.ItemAdded += OnItemAdded;
             _model.ItemRemoved += OnItemRemoved;
+
+            _questManager.AllQuestsFinished += OnAllQuestsFinished;
         }
 
         public void AddItem(ItemType itemType, int quantity = 1)
@@ -72,6 +77,11 @@ namespace Critsoft.ForgeSim2025.Gameplay.Controllers
                 _model.ItemAdded -= OnItemAdded;
                 _model.ItemRemoved -= OnItemRemoved;
             }
+
+            if (_questManager != null)
+            {
+                _questManager.AllQuestsFinished -= OnAllQuestsFinished;
+            }
         }
 
         private void InitRandomItems()
@@ -106,6 +116,22 @@ namespace Critsoft.ForgeSim2025.Gameplay.Controllers
             }
         }
 
+        private void AddRandomBonusItem()
+        {
+            int randomBonusItemIndex = UnityEngine.Random.Range(0, 2); // todo: Get items from ItemsLibrary instead of hardcoding them like this
+            switch (randomBonusItemIndex)
+            {
+                case 0:
+                    AddItem(ItemType.LuckyCharm);
+                    break;
+
+                case 1:
+                default:
+                    AddItem(ItemType.TimeAmulet);
+                    break;
+            }
+        }
+
         private void OnInventoryUpdated()
         {
             InventoryUpdated?.Invoke();
@@ -119,6 +145,11 @@ namespace Critsoft.ForgeSim2025.Gameplay.Controllers
         private void OnItemRemoved(ItemType itemType, int amount)
         {
             ItemRemoved?.Invoke(itemType, amount);
+        }
+
+        private void OnAllQuestsFinished()
+        {
+            AddRandomBonusItem();
         }
 
         #endregion
