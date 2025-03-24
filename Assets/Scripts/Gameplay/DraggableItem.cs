@@ -29,6 +29,10 @@ namespace Critsoft.ForgeSim2025.Gameplay
         public void ChangeSlot(Slot slot)
         {
             _originalParent = slot.transform;
+
+            transform.SetParent(_originalParent);
+            transform.localPosition = Vector3.zero;
+
             SlotChanged?.Invoke(slot);
         }
 

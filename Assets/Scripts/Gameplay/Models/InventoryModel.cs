@@ -52,6 +52,18 @@ namespace Critsoft.ForgeSim2025.Gameplay.Models
             InventoryUpdated?.Invoke();
         }
 
+        public int GetItemQuantity(ItemType itemType)
+        {
+            if (_items.ContainsKey(itemType))
+            {
+                return _items[itemType];
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
         #endregion
     }
 }

@@ -32,6 +32,24 @@ namespace Critsoft.ForgeSim2025.Gameplay.Views
             _controller.ItemRemoved += OnItemRemoved;
         }
 
+        public void ReturnItemToFreeSlot(Item item)
+        {
+            for (int i = 0; i < _slots.Count; i++)
+            {
+                Slot slot = _slots[i];
+                if (slot.IsEmpty)
+                {
+                    item.CurrentSlot.ClearSlot();
+                    
+                    DraggableItem draggableItem = item.GetComponent<DraggableItem>();
+                    draggableItem.ChangeSlot(slot);
+                    
+                    slot.AddItem(item);
+                    return;
+                }
+            }
+        }
+
         #endregion
 
         #region Private Methods

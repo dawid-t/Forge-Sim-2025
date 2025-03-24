@@ -47,14 +47,21 @@ namespace Critsoft.ForgeSim2025.Gameplay
         {
             if (_item != null)
             {
+                bool reachesZeroQuantity = false;
                 if (quantity >= _item.Quantity)
                 {
                     quantity = _item.Quantity;
+                    reachesZeroQuantity = true;
+                }
+
+                _item.RemoveQuantity(quantity);
+
+                if (reachesZeroQuantity)
+                {
                     _item = null;
                     _isEmpty = true;
                 }
 
-                _item.RemoveQuantity(quantity);
                 return quantity;
             }
 
@@ -67,7 +74,7 @@ namespace Critsoft.ForgeSim2025.Gameplay
             _isEmpty = true;
         }
 
-        public void OnDrop(PointerEventData eventData) // IDropHandler
+        public virtual void OnDrop(PointerEventData eventData) // IDropHandler
         {
             if (!_isEmpty)
                 return;

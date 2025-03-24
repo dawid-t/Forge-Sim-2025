@@ -45,18 +45,28 @@ namespace Critsoft.ForgeSim2025.Gameplay.Controllers
             _model.RemoveItem(itemType, quantity);
         }
 
+        public int GetItemQuantity(ItemType itemType)
+        {
+            return _model.GetItemQuantity(itemType);
+        }
+
+        public void ReturnItemToFreeSlot(Item item)
+        {
+            _view.ReturnItemToFreeSlot(item);
+        }
+
         #endregion
 
         #region Private Methods
 
-        /*private void Start() // only for testing
+        private void Start() // only for testing
         {
             AddItem(ItemType.FireShard, 2);
-            AddItem(ItemType.IronOre);
+            AddItem(ItemType.IronOre, 3);
             AddItem(ItemType.FireShard, 2);
             AddItem(ItemType.DraconicCrown, 2);
             AddItem(ItemType.DragonScale, 5);
-        }*/
+        }
 
         private void OnDestroy()
         {
