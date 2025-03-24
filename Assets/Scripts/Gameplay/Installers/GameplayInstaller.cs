@@ -23,6 +23,9 @@ namespace Critsoft.ForgeSim2025.Gameplay.Installers
             Container.BindFactory<Quest, Quest.Factory>()
             .FromComponentInNewPrefab(_questPrefab)
             .UnderTransform(_questGrid);
+
+            // Other
+            Container.Bind<QuestManager>().FromComponentInHierarchy().AsSingle();
         }
     }
 }

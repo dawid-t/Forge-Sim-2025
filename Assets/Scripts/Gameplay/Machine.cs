@@ -1,4 +1,6 @@
 using Critsoft.ForgeSim2025.Gameplay.Controllers;
+using Critsoft.ForgeSim2025.Gameplay.Quests;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +13,12 @@ namespace Critsoft.ForgeSim2025.Gameplay
 {
     public class Machine : MonoBehaviour
     {
+        #region Events
+
+        public event Action<Machine> MachineUnlocked;
+
+        #endregion
+
         #region Serialized Fields
 
         [SerializeField] private bool _isLocked;
@@ -33,6 +41,7 @@ namespace Critsoft.ForgeSim2025.Gameplay
         private float _remainingCraftingTime;
         private WaitForSeconds _craftWaitForSeconds = new WaitForSeconds(CraftTimerTick);
         private InventoryController _inventoryController;
+        private QuestManager _questManager;
 
         #endregion
 
@@ -45,9 +54,12 @@ namespace Critsoft.ForgeSim2025.Gameplay
         #region Public Methods
 
         [Inject]
-        public void Construct(InventoryController inventoryController)
+        public void Construct(InventoryController inventoryController, QuestManager questManager)
         {
             _inventoryController = inventoryController;
+            _questManager = questManager;
+
+            _questManager.QuestFinished += OnQuestFinished;
         }
 
         public void OnButtonClicked()
@@ -72,6 +84,14 @@ namespace Critsoft.ForgeSim2025.Gameplay
             {
                 _machineImage.color = new Color(0.5f, 0.5f, 0.5f, 0.2f);
                 _forgeButton.enabled = false;
+            }
+        }
+
+        private void OnDestroy()
+        {
+            if (_questManager != null)
+            {
+                _questManager.QuestFinished -= OnQuestFinished;
             }
         }
 
@@ -141,7 +161,7 @@ namespace Critsoft.ForgeSim2025.Gameplay
             }
 
             // Finish
-            float successPercentage = Random.Range(0f, 1f);
+            float successPercentage = UnityEngine.Random.Range(0f, 1f);
             if (successPercentage <= recipeInUse.SuccessRate)
             {
                 ItemType craftedItem = recipeInUse.ResultItem;
@@ -151,6 +171,15 @@ namespace Critsoft.ForgeSim2025.Gameplay
             _isCraftingInProgress = false;
             _forgeButton.enabled = true;
             _forgeButtonText.text = ForgeButtonText;
+        }
+
+        private void OnQuestFinished(int questId, MachineType machineType)
+        {
+            if (_isLocked && machineType == _type)
+            {
+                Unlock();
+                MachineUnlocked?.Invoke(this);
+            }
         }
 
         #endregion

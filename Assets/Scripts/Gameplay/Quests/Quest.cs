@@ -2,10 +2,18 @@ using Critsoft.ForgeSim2025.Gameplay.Controllers;
 using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using Zenject;
 
 namespace Critsoft.ForgeSim2025.Gameplay.Quests
 {
+    public enum QuestState
+    {
+        None,
+        InProgress,
+        Finished
+    }
+
     public class Quest : MonoBehaviour
     {
         public class Factory : PlaceholderFactory<Quest>
@@ -22,6 +30,7 @@ namespace Critsoft.ForgeSim2025.Gameplay.Quests
 
         [SerializeField] private TMP_Text _descriptionText;
         [SerializeField] private TMP_Text _progressText;
+        [SerializeField] private Image _backgroundImage;
 
         #endregion
 
@@ -40,6 +49,7 @@ namespace Critsoft.ForgeSim2025.Gameplay.Quests
         public int Progress { get; private set; }
         public int ProgressRequired { get; private set; }
         public MachineType Reward { get; private set; }
+        public QuestState State { get; private set; }
         public TMP_Text DescriptionText => _descriptionText;
         public TMP_Text ProgressText => _progressText;
 
@@ -65,6 +75,8 @@ namespace Critsoft.ForgeSim2025.Gameplay.Quests
 
             DescriptionText.text = questData.Description;
             ProgressText.text = "0/" + questData.ProgressRequired;
+
+            State = QuestState.InProgress;
         }
 
         #endregion
@@ -81,7 +93,7 @@ namespace Critsoft.ForgeSim2025.Gameplay.Quests
 
         private void OnItemAdded(ItemType itemType, int quantity)
         {
-            if (itemType == Requirement)
+            if (State != QuestState.Finished && itemType == Requirement)
             {
                 QuestProgressUpdated?.Invoke(Id);
 
@@ -90,6 +102,8 @@ namespace Critsoft.ForgeSim2025.Gameplay.Quests
 
                 if (Progress >= ProgressRequired)
                 {
+                    _backgroundImage.color = Color.green;
+                    State = QuestState.Finished;
                     QuestFinished?.Invoke(Id, Reward);
                 }
             }

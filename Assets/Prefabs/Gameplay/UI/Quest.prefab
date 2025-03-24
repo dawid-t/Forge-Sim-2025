@@ -226,6 +226,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _descriptionText: {fileID: 5874130664494821916}
   _progressText: {fileID: 7793728535964730144}
+  _backgroundImage: {fileID: 130545649949455813}
 --- !u!1 &8201960530438544044
 GameObject:
   m_ObjectHideFlags: 0

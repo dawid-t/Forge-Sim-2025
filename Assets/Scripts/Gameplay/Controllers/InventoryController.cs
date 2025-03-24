@@ -62,7 +62,7 @@ namespace Critsoft.ForgeSim2025.Gameplay.Controllers
         private void Start() // only for testing
         {
             AddItem(ItemType.FireShard, 2);
-            AddItem(ItemType.IronOre, 3);
+            AddItem(ItemType.IronOre, 6);
             AddItem(ItemType.FireShard, 2);
             AddItem(ItemType.DraconicCrown, 2);
             AddItem(ItemType.DragonScale, 5);

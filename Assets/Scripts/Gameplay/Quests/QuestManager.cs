@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
@@ -6,6 +7,12 @@ namespace Critsoft.ForgeSim2025.Gameplay.Quests
 {
     public class QuestManager : MonoBehaviour
     {
+        #region Events
+
+        public event Action<int, MachineType> QuestFinished;
+
+        #endregion
+
         #region Serialized Fields
 
         [SerializeField] private QuestsLibrarySO _questsLibrary;
@@ -38,14 +45,31 @@ namespace Critsoft.ForgeSim2025.Gameplay.Quests
             CreateQuests();
         }
 
+        private void OnDestroy()
+        {
+            foreach (var quest in _quests)
+            {
+                if (quest != null)
+                {
+                    quest.QuestFinished -= OnQuestFinished;
+                }
+            }
+        }
+
         private void CreateQuests()
         {
             foreach (QuestDataSO questData in _questsLibrary.Quests)
             {
                 Quest quest = _questFactory.Create();
                 quest.SetQuestData(questData);
+                quest.QuestFinished += OnQuestFinished;
                 _quests.Add(quest);
             }
+        }
+
+        private void OnQuestFinished(int questId, MachineType machineType)
+        {
+            QuestFinished?.Invoke(questId, machineType);
         }
 
         #endregion
