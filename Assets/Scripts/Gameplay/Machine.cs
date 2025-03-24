@@ -144,7 +144,6 @@ namespace Critsoft.ForgeSim2025.Gameplay
             StartCoroutine(CraftItem(recipeInUse));
         }
 
-
         private IEnumerator CraftItem(RecipeDataSO recipeInUse)
         {
             // Start
@@ -182,44 +181,42 @@ namespace Critsoft.ForgeSim2025.Gameplay
             _isCraftingInProgress = false;
             _forgeButton.enabled = true;
             _forgeButtonText.text = ForgeButtonText;
-
-
-            // Local methods
-            float GetTimeBonus()
-            {
-                int quantity = _inventoryController.GetItemQuantity(ItemType.TimeAmulet);
-                if (quantity > 0)
-                {
-                    ItemDataSO itemWithEffect = _itemsLibrary.Items
-                        .FirstOrDefault(item => item.Type == ItemType.TimeAmulet);
-
-                    if (itemWithEffect != null)
-                    {
-                        return itemWithEffect.BonusEffectValue;
-                    }
-                }
-
-                return 0f;
-            }
-
-            float GetSuccesRateBonus()
-            {
-                int quantity = _inventoryController.GetItemQuantity(ItemType.LuckyCharm);
-                if (quantity > 0)
-                {
-                    ItemDataSO itemWithEffect = _itemsLibrary.Items
-                        .FirstOrDefault(item => item.Type == ItemType.LuckyCharm);
-
-                    if (itemWithEffect != null)
-                    {
-                        return itemWithEffect.BonusEffectValue;
-                    }
-                }
-
-                return 0f;
-            }
         }
-        
+
+        private float GetTimeBonus()
+        {
+            int quantity = _inventoryController.GetItemQuantity(ItemType.TimeAmulet);
+            if (quantity > 0)
+            {
+                ItemDataSO itemWithEffect = _itemsLibrary.Items
+                    .FirstOrDefault(item => item.Type == ItemType.TimeAmulet);
+
+                if (itemWithEffect != null)
+                {
+                    return itemWithEffect.BonusEffectValue;
+                }
+            }
+
+            return 0f;
+        }
+
+        private float GetSuccesRateBonus()
+        {
+            int quantity = _inventoryController.GetItemQuantity(ItemType.LuckyCharm);
+            if (quantity > 0)
+            {
+                ItemDataSO itemWithEffect = _itemsLibrary.Items
+                    .FirstOrDefault(item => item.Type == ItemType.LuckyCharm);
+
+                if (itemWithEffect != null)
+                {
+                    return itemWithEffect.BonusEffectValue;
+                }
+            }
+
+            return 0f;
+        }
+
         private void OnQuestFinished(int questId, MachineType machineType)
         {
             if (_isLocked && machineType == _type)
