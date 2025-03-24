@@ -59,14 +59,9 @@ namespace Critsoft.ForgeSim2025.Gameplay.Controllers
 
         #region Private Methods
 
-        private void Start() // only for testing
+        private void Start()
         {
-            AddItem(ItemType.FireShard, 2);
-            AddItem(ItemType.IronOre, 6);
-            AddItem(ItemType.FireShard, 2);
-            AddItem(ItemType.DraconicCrown, 2);
-            AddItem(ItemType.DragonScale, 5);
-            //AddItem(ItemType.TimeAmulet);
+            InitRandomItems();
         }
 
         private void OnDestroy()
@@ -76,6 +71,38 @@ namespace Critsoft.ForgeSim2025.Gameplay.Controllers
                 _model.InventoryUpdated -= OnInventoryUpdated;
                 _model.ItemAdded -= OnItemAdded;
                 _model.ItemRemoved -= OnItemRemoved;
+            }
+        }
+
+        private void InitRandomItems()
+        {
+            // Normal items
+            int randomQuantity = UnityEngine.Random.Range(GameConfig.IronOreInitRandomMin, GameConfig.IronOreInitRandomMax + 1);
+            AddItem(ItemType.IronOre, randomQuantity);
+
+            randomQuantity = UnityEngine.Random.Range(GameConfig.GoldOreInitRandomMin, GameConfig.GoldOreInitRandomMax + 1);
+            AddItem(ItemType.GoldOre, randomQuantity + 5);
+
+            randomQuantity = UnityEngine.Random.Range(GameConfig.FireShardInitRandomMin, GameConfig.FireShardInitRandomMax + 1);
+            AddItem(ItemType.FireShard, randomQuantity + 5);
+
+            randomQuantity = UnityEngine.Random.Range(GameConfig.EmberDustInitRandomMin, GameConfig.EmberDustInitRandomMax + 1);
+            AddItem(ItemType.EmberDust, randomQuantity);
+
+            randomQuantity = UnityEngine.Random.Range(GameConfig.DragonScaleInitRandomMin, GameConfig.DragonScaleInitRandomMax + 1);
+            AddItem(ItemType.DragonScale, randomQuantity);
+
+            // Bonus items
+            float randomPercentage = UnityEngine.Random.Range(0f, 1f);
+            if (randomPercentage <= GameConfig.LuckyCharmInitPercentageChance)
+            {
+                AddItem(ItemType.LuckyCharm);
+            }
+
+            randomPercentage = UnityEngine.Random.Range(0f, 1f);
+            if (randomPercentage <= GameConfig.TimeAmuletInitPercentageChance)
+            {
+                AddItem(ItemType.TimeAmulet);
             }
         }
 
