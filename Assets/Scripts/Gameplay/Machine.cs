@@ -119,18 +119,23 @@ namespace Critsoft.ForgeSim2025.Gameplay
             RecipeDataSO recipeInUse = null;
             foreach (RecipeDataSO recipe in _craftingRecipes)
             {
+                bool allResourcesMatch = true;
+
                 foreach (ItemType resource in recipe.Resources)
                 {
-                    if (resourcesInSlots.Contains(resource))
+                    if (!resourcesInSlots.Contains(resource))
                     {
-                        isResourceValid = true;
-                        recipeInUse = recipe;
+                        allResourcesMatch = false;
                         break;
                     }
                 }
 
-                if (isResourceValid)
+                if (allResourcesMatch)
+                {
+                    isResourceValid = true;
+                    recipeInUse = recipe;
                     break;
+                }
             }
 
             if (!isResourceValid)
@@ -138,6 +143,7 @@ namespace Critsoft.ForgeSim2025.Gameplay
 
             StartCoroutine(CraftItem(recipeInUse));
         }
+
 
         private IEnumerator CraftItem(RecipeDataSO recipeInUse)
         {
