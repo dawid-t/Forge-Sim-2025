@@ -147,7 +147,8 @@ namespace Critsoft.ForgeSim2025.Gameplay
 
             foreach (ItemType resource in recipeInUse.Resources)
             {
-                Item remainingResource = _slots.Select(slot => slot.Item).FirstOrDefault(item => item.Type == resource);
+                Item remainingResource = _slots.Select(slot => slot.Item)
+                    .FirstOrDefault(item => item != null && item.Type == resource);
                 _inventoryController.ReturnItemToFreeSlot(remainingResource);
                 _inventoryController.RemoveItem(resource);
             }
