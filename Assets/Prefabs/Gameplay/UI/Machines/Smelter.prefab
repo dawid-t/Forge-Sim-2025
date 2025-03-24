@@ -443,6 +443,7 @@ MonoBehaviour:
   _machineImage: {fileID: 4347830945961401458}
   _forgeButton: {fileID: 3800232964617782458}
   _forgeButtonText: {fileID: 5363830224873105357}
+  _itemsLibrary: {fileID: 11400000, guid: 6b3d172e981ae2a44833af351e2e0d1f, type: 2}
 --- !u!1 &8361151173618770686
 GameObject:
   m_ObjectHideFlags: 0

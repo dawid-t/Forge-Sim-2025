@@ -18,6 +18,9 @@ namespace Critsoft.ForgeSim2025.Gameplay
         RadiantStaff,
         EnchancedEmberBlade,
         EnchancedRadiantStaff,
-        DraconicCrown
+        DraconicCrown,
+
+        LuckyCharm,
+        TimeAmulet
     }
 }

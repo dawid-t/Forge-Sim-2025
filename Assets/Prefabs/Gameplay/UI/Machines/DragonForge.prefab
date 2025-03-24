@@ -506,6 +506,7 @@ MonoBehaviour:
   _machineImage: {fileID: 2402130032037531473}
   _forgeButton: {fileID: 6723421838204473433}
   _forgeButtonText: {fileID: 7494223808741060376}
+  _itemsLibrary: {fileID: 11400000, guid: 6b3d172e981ae2a44833af351e2e0d1f, type: 2}
 --- !u!1001 &2418428711847080075
 PrefabInstance:
   m_ObjectHideFlags: 0

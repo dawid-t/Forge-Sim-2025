@@ -24,6 +24,11 @@ namespace Critsoft.ForgeSim2025.Gameplay
         private int _quantity;
         private string _name;
         private string _description;
+        
+        private bool _hasBonusEffect;
+        private BonusEffectType _bonusEffect;
+        private float _bonusEffectValue;
+        
         private Slot _currentSlot;
         private DraggableItem _draggableItem;
 
@@ -36,6 +41,9 @@ namespace Critsoft.ForgeSim2025.Gameplay
         public int Quantity => _quantity;
         public string Name => _name;
         public string Description => _description;
+        public bool HasBonusEffect => _hasBonusEffect;
+        public BonusEffectType BonusEffect => _bonusEffect;
+        public float BonusEffectValue => _bonusEffectValue;
         public Image Image => _image;
         public Slot CurrentSlot => _currentSlot;
 
@@ -52,6 +60,10 @@ namespace Critsoft.ForgeSim2025.Gameplay
             _quantity = quantity;
             _name = itemData.Name;
             _description = itemData.Description;
+
+            _hasBonusEffect = itemData.HasBonusEffect;
+            _bonusEffect = itemData.BonusEffect;
+            _bonusEffectValue = itemData.BonusEffectValue;
             _image.sprite = itemData.Sprite;
             
             _currentSlot = currentSlot;

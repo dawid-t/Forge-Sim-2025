@@ -66,6 +66,7 @@ namespace Critsoft.ForgeSim2025.Gameplay.Controllers
             AddItem(ItemType.FireShard, 2);
             AddItem(ItemType.DraconicCrown, 2);
             AddItem(ItemType.DragonScale, 5);
+            //AddItem(ItemType.TimeAmulet);
         }
 
         private void OnDestroy()

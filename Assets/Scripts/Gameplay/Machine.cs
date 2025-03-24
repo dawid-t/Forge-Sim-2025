@@ -29,6 +29,8 @@ namespace Critsoft.ForgeSim2025.Gameplay
         [SerializeField] private Image _machineImage;
         [SerializeField] private Button _forgeButton;
         [SerializeField] private TMP_Text _forgeButtonText;
+        [Space]
+        [SerializeField] private ItemsLibrarySO _itemsLibrary;
 
         #endregion
 
@@ -152,6 +154,7 @@ namespace Critsoft.ForgeSim2025.Gameplay
 
             // In progress...
             _remainingCraftingTime = recipeInUse.TimeInSeconds;
+            _remainingCraftingTime -= GetTimeBonus();
             while (_remainingCraftingTime > 0)
             {
                 yield return _craftWaitForSeconds;
@@ -162,6 +165,7 @@ namespace Critsoft.ForgeSim2025.Gameplay
 
             // Finish
             float successPercentage = UnityEngine.Random.Range(0f, 1f);
+            successPercentage -= GetSuccesRateBonus();
             if (successPercentage <= recipeInUse.SuccessRate)
             {
                 ItemType craftedItem = recipeInUse.ResultItem;
@@ -171,8 +175,44 @@ namespace Critsoft.ForgeSim2025.Gameplay
             _isCraftingInProgress = false;
             _forgeButton.enabled = true;
             _forgeButtonText.text = ForgeButtonText;
-        }
 
+
+            // Local methods
+            float GetTimeBonus()
+            {
+                int quantity = _inventoryController.GetItemQuantity(ItemType.TimeAmulet);
+                if (quantity > 0)
+                {
+                    ItemDataSO itemWithEffect = _itemsLibrary.Items
+                        .FirstOrDefault(item => item.Type == ItemType.TimeAmulet);
+
+                    if (itemWithEffect != null)
+                    {
+                        return itemWithEffect.BonusEffectValue;
+                    }
+                }
+
+                return 0f;
+            }
+
+            float GetSuccesRateBonus()
+            {
+                int quantity = _inventoryController.GetItemQuantity(ItemType.LuckyCharm);
+                if (quantity > 0)
+                {
+                    ItemDataSO itemWithEffect = _itemsLibrary.Items
+                        .FirstOrDefault(item => item.Type == ItemType.LuckyCharm);
+
+                    if (itemWithEffect != null)
+                    {
+                        return itemWithEffect.BonusEffectValue;
+                    }
+                }
+
+                return 0f;
+            }
+        }
+        
         private void OnQuestFinished(int questId, MachineType machineType)
         {
             if (_isLocked && machineType == _type)

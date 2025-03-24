@@ -10,5 +10,9 @@ namespace Critsoft.ForgeSim2025.Gameplay
         public string Name;
         public string Description;
         public Sprite Sprite;
+        [Space]
+        public bool HasBonusEffect;
+        public BonusEffectType BonusEffect;
+        public float BonusEffectValue;
     }
 }
