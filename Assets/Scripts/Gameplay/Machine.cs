@@ -185,28 +185,21 @@ namespace Critsoft.ForgeSim2025.Gameplay
 
         private float GetTimeBonus()
         {
-            int quantity = _inventoryController.GetItemQuantity(ItemType.TimeAmulet);
-            if (quantity > 0)
-            {
-                ItemDataSO itemWithEffect = _itemsLibrary.Items
-                    .FirstOrDefault(item => item.Type == ItemType.TimeAmulet);
-
-                if (itemWithEffect != null)
-                {
-                    return itemWithEffect.BonusEffectValue;
-                }
-            }
-
-            return 0f;
+            return GetBonusEffect(ItemType.TimeAmulet);
         }
 
         private float GetSuccesRateBonus()
         {
-            int quantity = _inventoryController.GetItemQuantity(ItemType.LuckyCharm);
+            return GetBonusEffect(ItemType.LuckyCharm);
+        }
+
+        private float GetBonusEffect(ItemType itemType)
+        {
+            int quantity = _inventoryController.GetItemQuantity(itemType);
             if (quantity > 0)
             {
                 ItemDataSO itemWithEffect = _itemsLibrary.Items
-                    .FirstOrDefault(item => item.Type == ItemType.LuckyCharm);
+                    .FirstOrDefault(item => item.Type == itemType);
 
                 if (itemWithEffect != null)
                 {
