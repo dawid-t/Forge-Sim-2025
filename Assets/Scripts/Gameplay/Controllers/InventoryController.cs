@@ -91,10 +91,10 @@ namespace Critsoft.ForgeSim2025.Gameplay.Controllers
             AddItem(ItemType.IronOre, randomQuantity);
 
             randomQuantity = UnityEngine.Random.Range(GameConfig.GoldOreInitRandomMin, GameConfig.GoldOreInitRandomMax + 1);
-            AddItem(ItemType.GoldOre, randomQuantity + 5);
+            AddItem(ItemType.GoldOre, randomQuantity);
 
             randomQuantity = UnityEngine.Random.Range(GameConfig.FireShardInitRandomMin, GameConfig.FireShardInitRandomMax + 1);
-            AddItem(ItemType.FireShard, randomQuantity + 5);
+            AddItem(ItemType.FireShard, randomQuantity);
 
             randomQuantity = UnityEngine.Random.Range(GameConfig.EmberDustInitRandomMin, GameConfig.EmberDustInitRandomMax + 1);
             AddItem(ItemType.EmberDust, randomQuantity);
